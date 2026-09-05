@@ -47,7 +47,7 @@ jobs:
             libv4l-dev libva-dev libvdpau-dev libvorbis-dev libvo-amrwbenc-dev \
             libunwind-dev libvpx-dev libwayland-dev libx11-dev libxext-dev \
             libxkbcommon-dev libxrandr-dev libxss-dev libxv-dev libxvidcore-dev \
-            linux-libc-dev nasm ninja-build pkg-config python3 python3-docutils wayland-protocols \
+            linux-libc-dev cmake nasm ninja-build pkg-config python3 python3-docutils wayland-protocols \
             x11proto-core-dev zlib1g-dev libfdk-aac-dev libtheora-dev libwebp-dev \
             unixodbc-dev libpq-dev libxxhash-dev libaom-dev
         pip3 install meson
@@ -84,6 +84,7 @@ jobs:
         printf "%s\n" --enable-small >> ffmpeg_options
         printf "%s\n" --enable-libass >> ffmpeg_options
         printf "%s\n" --enable-libdav1d >> ffmpeg_options
+        printf "%s\n" --enable-libsmb2 >> ffmpeg_options
 
         printf "%s\n" --disable-bzlib >> ffmpeg_options
         printf "%s\n" --disable-sndio >> ffmpeg_options
@@ -99,7 +100,7 @@ jobs:
         printf "%s\n" "--enable-demuxer=*sub*,*ac3,*ac,*avs*,*[mj]peg*,*vc*,*web*,au,ape,ass,av[1i],concat,dnxhd,dts*,*dash*,*flv,gif,hls,h264,kux,matroska,mov,mp3,mxf,obu,ogg,pcm*,rawvideo,rt*p,spdif,srt,v210*,wav,*pipe,image2" >> ffmpeg_options
         printf "%s\n" "--enable-encoder=*_at,aac,gif,h26[3-4]*,av1*,hevc*,mjpeg*,*png,opus,pcm*,prores*,rawvideo,spdif,speedhq,*jpeg,*png,vp[8-9]*,wrapped_avframe" >> ffmpeg_options
         printf "%s\n" "--enable-muxer=*jpeg,fifo,flv,gif,hls,h264,hevc,image2,mov,mp4,mpegts,matroska,null,pcm*,rawvideo,rt*,spdif,*pipe,*segment,webm,wav" >> ffmpeg_options
-        printf "%s\n" "--enable-protocol=cache,concat*,crypto*,data,fd,*file,ftp,h*,i*,pipe,rt*,s*,t*,u*" >> ffmpeg_options
+        printf "%s\n" "--enable-protocol=cache,concat*,crypto*,data,fd,*file,ftp,h*,i*,libsmb2,pipe,rt*,s*,t*,u*" >> ffmpeg_options
         printf "%s\n" "--enable-filter=*null*,afade,*fifo,*format,*resample,aeval,atempo,pan,crop,eq*,framerate,hw*,loudnorm,scale,volume,yadif*" >> ffmpeg_options
 
         > mpv_options

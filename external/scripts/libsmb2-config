@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+
+BUILD="$(pwd)"
+newline="
+"
+
+if test -f "$BUILD"/libsmb2_options ; then
+    IFS=$newline
+    set -- $(cat "$BUILD"/libsmb2_options) "$@"
+    unset -v IFS
+fi
+
+case "$PKG_CONFIG_PATH" in
+  '')
+    export PKG_CONFIG_PATH="$BUILD/build_libs/lib/pkgconfig"
+    ;;
+  *)
+    export PKG_CONFIG_PATH="$BUILD/build_libs/lib/pkgconfig:$PKG_CONFIG_PATH"
+    ;;
+esac
+
+rm -rf "$BUILD"/libsmb2_build
+cmake -S "$BUILD/libsmb2" -B "$BUILD/libsmb2_build" \
+    -DCMAKE_INSTALL_PREFIX="$BUILD/build_libs" \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -GNinja "$@"

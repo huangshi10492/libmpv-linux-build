@@ -20,6 +20,8 @@ scripts/libass-config
 scripts/libass-build "$@"
 scripts/dav1d-config
 scripts/dav1d-build "$@"
+scripts/libsmb2-config
+scripts/libsmb2-build "$@"
 scripts/ffmpeg-config
 scripts/ffmpeg-build "$@"
 scripts/mpv-config

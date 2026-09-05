@@ -1,0 +1,24 @@
+#!/bin/sh
+set -e
+
+ninja -C libsmb2_build "$@"
+ninja -C libsmb2_build install
+
+HDR="build_libs/include/smb2/libsmb2.h"
+PC="build_libs/lib/pkgconfig/libsmb2.pc"
+
+if test -f "$HDR" && ! grep -q 'stddef.h' "$HDR"; then
+    tmp="$(mktemp)"
+    {
+        printf '#include <time.h>\n'
+        printf '#include <stdint.h>\n'
+        printf '#include <stddef.h>\n'
+        printf '#include "smb2.h"\n'
+        cat "$HDR"
+    } > "$tmp"
+    mv "$tmp" "$HDR"
+fi
+
+if test -f "$PC" && ! grep -q 'includedir}/smb2' "$PC"; then
+    sed -i 's|Cflags: -I${includedir}|Cflags: -I${includedir} -I${includedir}/smb2|' "$PC"
+fi

@@ -1,9 +1,11 @@
 /ffmpeg
+/libsmb2
 /fribidi
 /libass
 /libplacebo
 /mpv
 /build_libs
+/libsmb2_build
 /ffmpeg_build
 *.deb
 /debian/changelog

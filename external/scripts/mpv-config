@@ -28,5 +28,8 @@ cd "$BUILD"/mpv
 # this is necessary due to the hybrid static / dynamic nature of the build
 # need to link against stdc++ in case libplacebo was built with glslang,
 # which requires that
-export LDFLAGS="$LDFLAGS $(pkg-config --libs fontconfig harfbuzz fribidi) -lstdc++"
+# Keep libsmb2's implementation symbols private to libmpv. It is statically
+# linked through FFmpeg, and exporting smb2_* lets another libsmb2 copy in the
+# host process interpose those references.
+export LDFLAGS="$LDFLAGS -Wl,--exclude-libs,libsmb2.a $(pkg-config --libs fontconfig harfbuzz fribidi) -lstdc++"
 meson setup build -Dbuildtype=release $OPTIONS "$@"
